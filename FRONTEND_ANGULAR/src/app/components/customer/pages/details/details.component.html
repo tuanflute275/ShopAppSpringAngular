@@ -1,0 +1,157 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+          <div class="iq-card-header d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0">Thông tin</h4>
+          </div>
+          <div class="iq-card-body pb-0">
+            <div class="description-contens align-items-top row">
+              <div class="col-md-6">
+                <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
+                  <div class="iq-card-body p-0">
+                    <div class="row align-items-center">
+                      <div class="col-3"></div>
+                      <div class="col-9">
+                        <ul id="description-slider" class="list-inline p-0 m-0 d-flex align-items-center">
+                          <li>
+                            <a href="javascript:void(0);">
+                              <img src="{{product.productImage}}" class="img-fluid w-100 rounded" alt="" />
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="iq-card-transparent iq-card-block iq-card-stretch iq-card-height">
+                  <div class="iq-card-body p-0">
+                    <span>#{{ product.productId }}</span>
+                    <h3 class="my-2">{{ product.productName }}</h3>
+                    <div class="price d-flex align-items-center font-weight-500 mb-2" *ngIf="product.productSalePrice==0">
+                      <span class="font-size-24 text-dark">
+                        {{ product.productPrice | currency: 'VND' : 'symbol' : '1.0-2'}}
+                      </span>
+                    </div>
+                    <div class="price d-flex align-items-center font-weight-500 mb-2"
+                      *ngIf="product.productSalePrice>0 && product.productSalePrice < product.productPrice">
+                      <span class="font-size-24 pr-2 text-dark">
+                        {{ product.productSalePrice | currency: 'VND' : 'symbol' : '1.0-2'}}
+                      </span>
+                      <span class="font-size-20 old-price">
+                        {{ product.productPrice | currency: 'VND' : 'symbol' : '1.0-2'}}
+                      </span>
+                    </div>
+                    <span class="text-dark mb-3 d-block">
+                      {{ product.productDescription ? product.productDescription :"Không có mô tả sản phẩm" }}
+                    </span>
+                    <div class="text-primary mb-4">
+                      Danh mục: <span class="text-body">{{ product.productCategoryName }}</span>
+                    </div>
+                    <div class="text-primary mb-4">
+                      Trạng thái: <span class="text-body">{{ product.productStatus == 1 ? "Còn hàng" : "hết hàng" }}</span>
+                    </div>
+
+                    <div class="mb-4 d-flex align-items-center">
+                      <a href="javascript:void();" (click)="onAddToCart(product.productId)"
+                        class="btn btn-primary view-more mr-2">Thêm vào giỏ hàng</a>
+                      <a href="javascript:void();" (click)="onBuyNow(product.productId)"
+                      class="btn btn-primary view-more mr-2">Mua ngay</a>
+                    </div>
+                    <!-- <div class="mb-3">
+                      <a href="#" class="text-body text-center"><span
+                          class="avatar-30 rounded-circle bg-primary d-inline-block mr-2"><i
+                            class="ri-heart-fill"></i></span><span>Thêm vào danh sách yêu thích</span></a>
+                    </div> -->
+                    <div class="iq-social d-flex align-items-center">
+                      <h5 class="mr-2">Chia sẻ:</h5>
+                      <ul class="list-inline d-flex p-0 mb-0 align-items-center">
+                        <li>
+                          <a href="https://www.facebook.com/profile.php?id=100047425502024" target="_blank"
+                            class="avatar-40 rounded-circle bg-primary mr-2 facebook"><i class="fa fa-facebook"
+                              aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://twitter.com/tuanflute275" target="_blank"
+                            class="avatar-40 rounded-circle bg-primary mr-2 twitter"><i class="fa fa-twitter"
+                              aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://www.youtube.com/channel/UCU3Sbb48DruRaeg-riJQx0A" target="_blank"
+                            class="avatar-40 rounded-circle bg-primary mr-2 youtube"><i class="fa fa-youtube-play"
+                              aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                          <a href="https://www.pinterest.com/tuanflute275/" target="_blank"
+                            class="avatar-40 rounded-circle bg-primary pinterest"><i class="fa fa-pinterest-p"
+                              aria-hidden="true"></i></a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="iq-card iq-card-block iq-card-stretch iq-card-height">
+          <div class="iq-card-header d-flex justify-content-between align-items-center position-relative">
+            <div class="iq-header-title">
+              <h4 class="card-title mb-0">Sản phẩm tương tự</h4>
+            </div>
+            <div class="iq-card-header-toolbar d-flex align-items-center">
+              <a [routerLink]="['/product']" class="btn btn-sm btn-primary view-more">Xem thêm</a>
+            </div>
+          </div>
+          <div class="iq-card-body single-similar-contens">
+            <div class="row">
+              <div class="card-category row justify-content-center align-items-center container m-auto">
+                <div class="col-md-4 my-4"
+                  *ngFor="let item of productRelated | paginate:{itemsPerPage: 6, currentPage:page} ">
+                  <div class="sp-card-2">
+                    <div class="overlap">
+                      <a (click)="getDetailProduct(item.productId)" style="cursor: pointer;" title="View Details">View
+                        Details</a>
+                    </div>
+                    <div class="card-image">
+                      <img src="{{ item.productImage }}" alt="{{ item.productName }}" />
+                    </div>
+
+                    <div class="card-content">
+                      <span class="card-title">{{ item.productName }}</span>
+                      <div class="d-flex my-2" *ngIf="item.productSalePrice == 0">
+                        <span class="price-start">
+                          <td>{{ item.productPrice | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                        </span>
+                      </div>
+                      <div class="d-flex my-2" *ngIf="item.productSalePrice > 0 && item.productSalePrice < item.productPrice">
+                        <span class="price-start">
+                          <td>{{ item.productPrice | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                        </span>
+                        <span class="price-end"
+                          style="text-decoration: line-through; color: #6d6767;margin-left: 10px;">
+                          {{item.productSalePrice | currency: 'VND' : 'symbol' : '1.0-2'}}
+                        </span>
+                      </div>
+                      <!-- <div class="card-caption">
+                        {{ item.category_name }}
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

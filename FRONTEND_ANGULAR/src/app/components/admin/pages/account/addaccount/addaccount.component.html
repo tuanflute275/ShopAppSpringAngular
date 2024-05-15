@@ -1,0 +1,148 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Thêm mới tài khoản</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <form [formGroup]="accountFormPost" (ngSubmit)="handleSubmit()">
+
+              <div class="form-group">
+                <label for="image"
+                  class="col-md-3 col-form-label">Image</label>
+                <div class="col-md-9 col-xl-8">
+                  <img style="height: 200px;width: 200px; cursor: pointer;"
+                    class="thumbnail rounded-circle" data-toggle="tooltip"
+                    title="Click to change the image" data-placement="bottom"
+                    src="../../../../../../assets/images/add-image-icon.jpg" alt="Avatar">
+                  <input name="file" type="file" onchange="changeImg(this)" multiple
+                  (change)="onFileChange($event)"
+                    class="image form-control-file mt-3" >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userName">User Name</label>
+                <input type="text" formControlName="userName" class="form-control" id="userName"
+                  placeholder="Your user name...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userName.invalid && (accountFormPost.controls.userName.touched || accountFormPost.controls.userName.dirty)">
+                  <div *ngIf="accountFormPost.controls.userName.errors">
+                    <div *ngIf="accountFormPost.controls.userName.errors['required']" style="color: red;">
+                      userName không được để trống !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userFullName">Full Name</label>
+                <input type="text" formControlName="userFullName" class="form-control" id="userFullName"
+                  placeholder="Your user name...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userFullName.invalid && (accountFormPost.controls.userFullName.touched || accountFormPost.controls.userFullName.dirty)">
+                  <div *ngIf="accountFormPost.controls.userFullName.errors">
+                    <div *ngIf="accountFormPost.controls.userFullName.errors['required']" style="color: red;">
+                      userFullName không được để trống !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userEmail">Email</label>
+                <input type="text" formControlName="userEmail" class="form-control" id="userEmail"
+                  placeholder="Your Email...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userEmail.invalid && (accountFormPost.controls.userEmail.touched || accountFormPost.controls.userEmail.dirty)">
+                  <div *ngIf="accountFormPost.controls.userEmail.errors">
+                    <div *ngIf="accountFormPost.controls.userEmail.errors['required']" style="color: red;">
+                      Email không được bỏ trống !
+                    </div>
+                    <div *ngIf="accountFormPost.controls.userEmail.errors['userEmail'] " style="color: red;">
+                      Email sai định dạng !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userPassword">Password</label>
+                <input type="text" formControlName="userPassword" class="form-control" id="userPassword"
+                  placeholder="Your password...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userPassword.invalid && (accountFormPost.controls.userPassword.touched || accountFormPost.controls.userPassword.dirty)">
+                  <div *ngIf="accountFormPost.controls.userPassword.errors">
+                    <div *ngIf="accountFormPost.controls.userPassword.errors['required']" style="color: red;">
+                      Password không được bỏ trống !
+                    </div>
+                    <div *ngIf="accountFormPost.controls.userPassword.errors['minlength'] " style="color: red;">
+                      Password tối thiểu 6 kí tự !
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userPhoneNumber">Phone Number</label>
+                <input type="text" formControlName="userPhoneNumber" class="form-control" id="userPhoneNumber"
+                  placeholder="Your user name...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userPhoneNumber.invalid && (accountFormPost.controls.userPhoneNumber.touched || accountFormPost.controls.userPhoneNumber.dirty)">
+                  <div *ngIf="accountFormPost.controls.userPhoneNumber.errors">
+                    <div *ngIf="accountFormPost.controls.userPhoneNumber.errors['required']" style="color: red;">
+                      userPhoneNumber không được để trống !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userAddress">Address</label>
+                <input type="text" formControlName="userAddress" class="form-control" id="userAddress"
+                  placeholder="Your user name...">
+                <div class="box-message"
+                  *ngIf="accountFormPost.controls.userAddress.invalid && (accountFormPost.controls.userAddress.touched || accountFormPost.controls.userAddress.dirty)">
+                  <div *ngIf="accountFormPost.controls.userAddress.errors">
+                    <div *ngIf="accountFormPost.controls.userAddress.errors['required']" style="color: red;">
+                      userAddress không được để trống !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label for="">Giới tính:</label>
+                <br />
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="0" [checked]="gender == 0"
+                      (change)="onItemChange($event)" />
+                    Nam
+                  </label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" value="1" [checked]="gender == 1"
+                      (change)="onItemChange($event)" />
+                    Nữ
+                  </label>
+                </div>
+              </div>
+
+              <button type="submit" *ngIf="accountFormPost.valid" class="btn btn-primary">Submit</button>
+              <button type="submit" *ngIf="!accountFormPost.valid" disabled class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

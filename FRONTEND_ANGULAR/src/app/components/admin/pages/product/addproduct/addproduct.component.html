@@ -1,0 +1,107 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Thêm mới sản phẩm</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <form [formGroup]="productFormPost" (ngSubmit)="handleSubmit()">
+
+              <div class="form-group">
+                <label for="image"
+                  class="col-md-3 col-form-label">Image</label>
+                <div class="col-md-9 col-xl-8">
+                  <img style="height: 200px;width: 200px; cursor: pointer;"
+                    class="thumbnail rounded-circle" data-toggle="tooltip"
+                    title="Click to change the image" data-placement="bottom"
+                    src="../../../../../../assets/images/add-image-icon.jpg" alt="Avatar">
+                  <input name="file" type="file" onchange="changeImg(this)" multiple
+                  (change)="onFileChange($event)"
+                    class="image form-control-file mt-3" >
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" formControlName="name" class="form-control" placeholder="Enter your name">
+                <div class="box-message"
+                  *ngIf="productFormPost.controls.name.invalid && (productFormPost.controls.name.touched || productFormPost.controls.name.dirty)">
+                  <div *ngIf="productFormPost.controls.name.errors">
+                    <div *ngIf="productFormPost.controls.name.errors['required']" style="color: red;">
+                      name không được bỏ trống!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" formControlName="price" class="form-control" placeholder="Enter your price">
+                <div class="box-message"
+                  *ngIf="productFormPost.controls.price.invalid && (productFormPost.controls.price.touched || productFormPost.controls.price.dirty)">
+                  <div *ngIf="productFormPost.controls.price.errors">
+                    <div *ngIf="productFormPost.controls.price.errors['required']" style="color: red;">
+                      price không được bỏ trống!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="sale_price">Sale Price</label>
+                <input type="text" formControlName="sale_price" class="form-control" placeholder="Enter your sale price">
+                <div class="box-message"
+                  *ngIf="productFormPost.controls.sale_price.invalid && (productFormPost.controls.sale_price.touched || productFormPost.controls.sale_price.dirty)">
+                  <div *ngIf="productFormPost.controls.sale_price.errors">
+                    <div *ngIf="productFormPost.controls.sale_price.errors['required']" style="color: red;">
+                      sale_price không được bỏ trống!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="category_id">Category</label>
+                <select class="form-control" formControlName="category_id" id="category_id">
+                  <option value="">--Danh Mục Sản Phẩm--</option>
+                  <option *ngFor="let item of data" value="{{ item.categoryId }}">{{ item.categoryName }}</option>
+                </select>
+                <div class="box-message"
+                  *ngIf="productFormPost.controls.category_id.invalid && (productFormPost.controls.category_id.touched || productFormPost.controls.category_id.dirty)">
+                  <div *ngIf="productFormPost.controls.image.errors">
+
+                    <div *ngIf="productFormPost.controls.category_id.errors['required']" style="color: red;">
+                      category_id không được bỏ trống!!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" formControlName="status" class="form-control" id="status">
+                  <option value="1" selected>Show</option>
+                  <option value="0">Hide</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea formControlName="description" class="form-control" id="description" placeholder="Enter your description" cols="20" rows="5"></textarea>
+              </div>
+
+              <button type="submit" *ngIf="productFormPost.valid" class="btn btn-primary">Submit</button>
+              <button type="submit" *ngIf="!productFormPost.valid" disabled class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

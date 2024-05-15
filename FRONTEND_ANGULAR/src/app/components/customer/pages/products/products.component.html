@@ -1,0 +1,75 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="iq-card-transparent mb-0">
+          <div class="d-block text-center">
+            <h2 class="mb-3">Tìm kiếm sản phẩm</h2>
+            <div class="w-100 iq-search-filter">
+              <ul class="list-inline p-0 m-0 row justify-content-center search-menu-options">
+                <li class="search-menu-opt">
+                  <div class="iq-search-bar search-book d-flex align-items-center">
+                    <form [formGroup]="myGroup" class="searchbox" style="width: 360px;">
+                      <input type="text" class="text search-input"
+                        placeholder="Bạn muốn tìm gì ??..." formControlName="keywords" (input)="handleChange($event)">
+                      <a class="search-link"><i class="ri-search-line"></i></a>
+                    </form>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="iq-card">
+          <div class="iq-card-body">
+            <div class="row">
+              <div class="card-category row justify-content-center align-items-center container m-auto">
+                <div class="col-md-4 my-4"
+                  *ngFor="let item of products | paginate:{itemsPerPage: 12, currentPage:page} ">
+                  <div class="sp-card-2">
+                    <div class="overlap">
+                      <a (click)="getDetailProduct(item.productId)" style="cursor: pointer;" title="View Details">View
+                        Details</a>
+                    </div>
+                    <div class="card-image">
+                      <img src="{{ item.productImage }}" alt="{{ item.productName }}" />
+                    </div>
+
+                    <div class="card-content">
+                      <span class="card-title">{{ item.productName }}</span>
+                      <div class="d-flex my-2" *ngIf="item.productSalePrice == 0">
+                        <span class="price-start">
+                          <td>{{ item.productPrice | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                        </span>
+                      </div>
+                      <div class="d-flex my-2" *ngIf="item.productSalePrice > 0 && item.productSalePrice < item.productPrice">
+                        <span class="price-start">
+                          <td>{{ item.productSalePrice | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                        </span>
+                        <span class="price-end"
+                          style="text-decoration: line-through; color: #6d6767;margin-left: 10px;">
+                          {{item.productPrice | currency: 'VND' : 'symbol' : '1.0-2'}}
+                        </span>
+                      </div>
+                      <!-- <div class="card-caption">
+                        {{ item.category_name }}
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content END  -->
+<app-footer></app-footer>

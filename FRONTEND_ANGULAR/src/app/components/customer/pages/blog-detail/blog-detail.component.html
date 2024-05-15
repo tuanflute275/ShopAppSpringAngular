@@ -1,0 +1,23 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="text-center">{{ blog.title }}</h2>
+        <div class="iq-card">
+          <div class="iq-card-body">
+            <div class="text-center my-3">
+              <img style="width: 100%;" src="{{blog.blogImage ? blog.blogImage : imageDefault}}" alt=""><br>
+            </div>
+            {{ blog.blogDescription }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content END  -->
+<app-footer></app-footer>

@@ -1,0 +1,83 @@
+version: "3.7"
+services:
+  mysql8-container:
+    container_name: mysql8-container
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Abc12345@#
+      MYSQL_DATABASE: ShopApp
+    ports:
+      - 3307:3306
+    networks:
+      - shopapp-network
+
+  phpmyadmin8-container:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin8-container
+    restart: always
+    depends_on:
+      - mysql8-container
+    ports:
+      - "8100:80"
+    environment:
+      PMA_HOST: mysql8-container
+    networks:
+      - shopapp-network
+
+  shopapp-spring-container:
+    container_name: shopapp-spring-container
+    build:
+      context: .
+      dockerfile: DockerfileJavaSpring
+    ports:
+      - 8090:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql8-container:3306/ShopApp?serverTimezone=UTC&allowPublicKeyRetrieval=true
+      MYSQL_ROOT_PASSWORD: Abc12345@#
+    depends_on:
+      - mysql8-container
+    networks:
+      - shopapp-network
+
+  shopapp-angular-container:
+    container_name: shopapp-angular-container
+    build:
+      context: .
+      dockerfile: DockerfileAngular
+    ports:
+      - "4100:4200"
+    # command: >
+    #   bash -c "npm start"
+    networks:
+      - shopapp-network
+
+networks:
+  shopapp-network:
+    name: shopapp-network
+    driver: bridge
+    external: true
+# docker-compose -f ./deployment.yaml down
+
+# khởi tạo database
+# docker network create shopapp-network
+# docker-compose -f ./deployment.yaml rm -s -f mysql8-container
+# docker-compose -f ./deployment.yaml up -d mysql8-container
+
+# truy cập vào sql
+# docker exec -it mysql8-container sh
+# mysql -u root -p
+# pass: Abc12345@#
+
+# tạo phpmyadmin
+# docker-compose -f ./deployment.yaml rm -s -f phpmyadmin8-container
+# docker-compose -f ./deployment.yaml up -d phpmyadmin8-container
+
+
+# tạo image docker backend
+# docker-compose -f ./deployment.yaml rm -s -f shopapp-spring-container
+# docker-compose -f ./deployment.yaml up -d shopapp-spring-container
+
+# tạo image docker frontend
+# docker-compose -f ./deployment.yaml rm -s -f shopapp-angular-container
+# docker-compose -f ./deployment.yaml up -d shopapp-angular-container

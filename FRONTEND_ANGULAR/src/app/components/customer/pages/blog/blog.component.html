@@ -1,0 +1,39 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="text-center">Tin tức</h2>
+        <div class="iq-card">
+          <div class="iq-card-body">
+            <div class="row">
+              <div class="card-category row justify-content-center align-items-center container m-auto">
+                <div class="col-md-4 my-4" *ngFor="let item of data | paginate:{itemsPerPage: 9, currentPage:page} ">
+                  <div class="sp-card-2">
+                    <div class="overlap">
+                      <a (click)="getDetailBlog(item.blogId)" style="cursor: pointer;" title="View Details">View
+                        Details</a>
+                    </div>
+                    <div class="card-image">
+                      <img src="{{ item.blogImage ? item.blogImage : imageDefault}}" alt="{{ item.blogTitle }}" />
+                    </div>
+                    <div class="card-content">
+                      <span class="card-title">{{ item.blogTitle }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content END  -->
+<app-footer></app-footer>

@@ -1,0 +1,118 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Danh sách đơn hàng</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>Người đặt</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Trạng thái thanh toán</th>
+                    <th>Thành tiền</th>
+                    <th>Ghi chú</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th class="text-center">Sản phẩm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate:{itemsPerPage: 10, currentPage:page}">
+                    <td>{{ item.orderFullName }}</td>
+                    <td>{{ item.orderPhoneNumber }}</td>
+                    <td>{{ item.orderAddress }}</td>
+                    <td>{{ item.orderDate | date : "fullDate" }}</td>
+                    <td>{{ item.orderPaymentMethods }}</td>
+                    <td>{{ item.orderStatusPayment }}</td>
+                    <td>{{ item.orderAmount | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                    <td>{{ item.orderNote }}</td>
+
+                    <td *ngIf="item.orderStatus == 1">
+                      <div class="badge badge-pill badge-success">Chờ Xác Nhận</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 2">
+                      <div class="badge badge-pill badge-success">Xác Nhận Đơn Hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 3">
+                      <div class="badge badge-pill badge-success">Chuẩn bị đơn hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 4">
+                      <div class="badge badge-pill badge-success">Đang giao hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 5">
+                      <div class="badge badge-pill badge-success">Đã giao hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 6">
+                      <div class="badge badge-pill badge-danger">Đã hủy</div>
+                    </td>
+                    <td>
+                      <div class="flex align-items-center list-user-action" *ngFor="let pro of item.orderDetails">
+                        <a type="button" class="bg-info" title="Detail" data-toggle="modal" data-target="#popup"
+                          (click)="OnDetailProduct(pro.productId)" href="javascript:void();"><i
+                            class="ri-eye-fill"></i></a>
+                      </div>
+
+                      <div class="modal fade" id="popup" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <a rel="noopener noreferrer">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center;
+                                font-size: 30px;
+                                color: #157779;"> Thông tin sản phẩm </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="d-flex">
+                                  <div class="col-6">
+                                    <img style="width: 100px;" src="{{product.productImage}}" alt="">
+                                  </div>
+                                  <div class="col-6">
+                                    <p><span class="text-dark" style="font-weight: bold; color: #0dd6b8 !important;">Name:</span><br> {{ product.productName }}</p>
+                                    <p><span class="text-dark" style="font-weight: bold; color: #0dd6b8 !important;">Price:</span><br> {{ (product.productSalePrice > 0 ?
+                                      product.productSalePrice : product.productPrice) | currency: 'VND' :
+                                      'symbol' : '1.0-2' }}</p>
+                                    <p><span class="text-dark" style="font-weight: bold; color: #0dd6b8 !important;">Category:</span><br> {{ product.productCategoryName }}</p>
+                                    <p><span class="text-dark" style="font-weight: bold; color: #0dd6b8 !important;">Description:</span><br> {{ product.productDescription ?
+                                      product.productDescription : "No Decs"}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content END  -->
+<app-footer></app-footer>

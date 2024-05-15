@@ -1,0 +1,62 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Danh sách coupon</h4>
+            </div>
+
+            <div class="iq-card-header-toolbar d-flex align-items-center">
+              <a [routerLink]="['/admin/couponCondition/add']" class="btn btn-primary">Thêm mới</a>
+            </div>
+          </div>
+
+          <div class="iq-card-body">
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered" style="width:100%">
+                <thead>
+                  <tr>
+                    <th width="5%">STT</th>
+                    <th width="20%">Mã Voucher</th>
+                    <th width="10%">Attribute</th>
+                    <th width="10%">Operator</th>
+                    <th width="10%">Value</th>
+                    <th width="10%">Discount Amount</th>
+                    <th width="15%">Hoạt động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate:{itemsPerPage: 10, currentPage:page} ">
+                    <td>{{item.id}}</td>
+                    <td>{{item.coupon_name}}</td>
+                    <td>{{item.attribute}}</td>
+                    <td>{{item.operator}}</td>
+                    <td>{{item.value}}</td>
+                    <td>{{item.discount_amount}}</td>
+                    <td>
+                      <div class="flex align-items-center list-user-action">
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Sửa" href="javascript:void();" (click)="onEditCouponCondition(item.id)"><i
+                            class="ri-pencil-line"></i></a>
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Delete" href="javascript:void();" (click)="onDeleteCouponCondition(item.id)"><i
+                            class="ri-delete-bin-line"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
