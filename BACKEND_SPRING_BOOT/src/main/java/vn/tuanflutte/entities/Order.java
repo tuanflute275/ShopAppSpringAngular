@@ -16,7 +16,7 @@ public class Order {
     private String orderFullName;
     @Column(name = "OrderAddress")
     private String orderAddress;
-    @Column(name = "OrderPhoneName")
+    @Column(name = "OrderPhoneNumber")
     private String orderPhoneNumber;
     @Column(name = "OrderEmail")
     private String orderEmail;
