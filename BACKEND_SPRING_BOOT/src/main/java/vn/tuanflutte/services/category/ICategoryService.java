@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface ICategoryService {
     public List<Category> findAll();
+    public List<Category> findAllNoSort();
     public List<Category> findByName(String key);
     public Optional<Category> findById(Integer categoryId);
     public Category save(Category category);

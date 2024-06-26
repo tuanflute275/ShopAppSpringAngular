@@ -1,5 +1,6 @@
 package vn.tuanflutte.controllers;
 
+import com.lowagie.text.DocumentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,10 +12,12 @@ import vn.tuanflutte.dtos.request.ChangePasswordForm;
 import vn.tuanflutte.dtos.request.JwtRequest;
 import vn.tuanflutte.dtos.request.ResetPassword;
 import vn.tuanflutte.dtos.request.SendEmail;
+import vn.tuanflutte.entities.Category;
 import vn.tuanflutte.entities.User;
 import vn.tuanflutte.exception.ResponseObject;
 import vn.tuanflutte.repositories.UserRepository;
 import vn.tuanflutte.sendEmail.ProvideSendEmail;
+import vn.tuanflutte.services.category.CategoryService;
 import vn.tuanflutte.services.uploadFile.IUploadFileService;
 import vn.tuanflutte.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +26,11 @@ import vn.tuanflutte.utils.JwtUtil;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController

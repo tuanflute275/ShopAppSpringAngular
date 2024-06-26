@@ -1,15 +1,24 @@
 package vn.tuanflutte.controllers;
 
+import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.tuanflutte.entities.Blog;
+import vn.tuanflutte.entities.Category;
 import vn.tuanflutte.exception.ResponseObject;
+import vn.tuanflutte.services.blog.BlogService;
 import vn.tuanflutte.services.blog.IBlogService;
+import vn.tuanflutte.services.category.CategoryService;
 import vn.tuanflutte.services.uploadFile.IUploadFileService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +110,22 @@ public class BlogController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("failed", "Cannot find data to delete", "")
         );
+    }
+
+    @GetMapping("/download")
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=blog_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<Blog> listData = blogService.findAllNoSort();
+
+        BlogService exporter = new BlogService(listData);
+        exporter.export(response);
     }
 
 }

@@ -1,16 +1,24 @@
 package vn.tuanflutte.controllers;
 
+import com.lowagie.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.tuanflutte.dtos.response.ProductDTO;
+import vn.tuanflutte.entities.Category;
 import vn.tuanflutte.entities.Product;
 import vn.tuanflutte.exception.ResponseObject;
+import vn.tuanflutte.services.category.CategoryService;
 import vn.tuanflutte.services.product.IProductService;
+import vn.tuanflutte.services.product.ProductService;
 import vn.tuanflutte.services.uploadFile.IUploadFileService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -20,7 +28,7 @@ public class ProductController {
     private IProductService productService;
 
     @GetMapping("")
-    ResponseEntity<ResponseObject> getAllProduct(@org.jetbrains.annotations.NotNull @RequestParam(defaultValue = "") String key, @RequestParam(defaultValue = "") String limit){
+    ResponseEntity<ResponseObject> getAllProduct(@RequestParam(defaultValue = "") String key){
         List<Product> list = null;
         if (key.equals("")){
             list = productService.findAll();
@@ -175,4 +183,20 @@ public class ProductController {
         );
     }
 
+
+    @GetMapping("/download")
+    public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=product_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<Product> listData = productService.findAllNoSort();
+
+        ProductService exporter = new ProductService(listData);
+        exporter.export(response);
+    }
 }

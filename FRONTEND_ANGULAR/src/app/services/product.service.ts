@@ -1,12 +1,13 @@
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private URL_API = 'http://localhost:8080/products';
+  private URL_API = `${environment.apiBaseUrl}/products`;
 
   private httpOptions = {
     headers: new HttpHeaders({

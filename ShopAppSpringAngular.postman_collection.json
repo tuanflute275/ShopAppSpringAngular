@@ -28,7 +28,14 @@
 					],
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
@@ -75,13 +82,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{spring_boot}}/categories/2",
+							"raw": "{{spring_boot}}/categories/1",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"categories",
-								"2"
+								"1"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -90,6 +97,54 @@
 				},
 				{
 					"name": "searchCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_boot}}/categories?key=giay",
+							"host": [
+								"{{spring_boot}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "giay"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "export-pdf",
 					"event": [
 						{
 							"listen": "test",
@@ -168,7 +223,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"quần 23\",\n    \"status\": 1\n}",
+							"raw": "{\n\t\"categoryName\": \"tesst\",\n    \"categoryStatus\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -220,7 +275,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"tesst update\",\n    \"status\": 0\n}",
+							"raw": "{\n\t\"categoryName\": \"test update\",\n    \"categoryStatus\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -281,13 +336,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{spring_boot}}/categories/50",
+							"raw": "{{spring_boot}}/categories/2",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"categories",
-								"50"
+								"2"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -394,7 +449,8 @@
 									"    pm.response.to.have.status(200);",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -412,7 +468,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{spring_boot}}/blog?key=1",
+							"raw": "{{spring_boot}}/blog?key=test",
 							"host": [
 								"{{spring_boot}}"
 							],
@@ -422,7 +478,55 @@
 							"query": [
 								{
 									"key": "key",
-									"value": "1"
+									"value": "test"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "export-pdf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_boot}}/blog?key=test",
+							"host": [
+								"{{spring_boot}}"
+							],
+							"path": [
+								"blog"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "test"
 								}
 							]
 						},
@@ -442,7 +546,8 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -461,7 +566,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"blog post\",\n    \"image\": \"https://i.pinimg.com/736x/2c/d8/a7/2cd8a74b799243e32d4ee504771a82d0.jpg\"\n}",
+							"raw": "{\n\t\"blogTitle\": \"blog post\",\n    \"blogImage\": \"https://i.pinimg.com/736x/2c/d8/a7/2cd8a74b799243e32d4ee504771a82d0.jpg\",\n    \"blogDescription\": \"test post\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -516,26 +621,28 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "imageFile",
+									"key": "image",
 									"type": "file",
-									"src": "/D:/3-pictures/code/category_admin.jpg"
+									"src": "postman-cloud:///1eec597e-d0b7-4a30-815f-6ad01da7630e"
 								},
 								{
 									"key": "blog",
 									"value": "{\"image\": \"null\", \"title\": \"tesst\", \"description\": \"desc\"}",
 									"contentType": "application/json",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{spring_boot}}/blog/",
+							"raw": "{{spring_boot}}/blog/upload-image/blog",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"blog",
-								""
+								"upload-image",
+								"blog"
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -574,7 +681,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"title\": \"blog update\",\n    \"image\": \"https://i.pinimg.com/736x/2c/d8/a7/2cd8a74b799243e32d4ee504771a82d0.jpg\"\n}",
+							"raw": "{\n\t\"blogTitle\": \"blog update\",\n    \"blogImage\": \"https://i.pinimg.com/736x/2c/d8/a7/2cd8a74b799243e32d4ee504771a82d0.jpg\",\n    \"blogDescription\": \"test update\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -582,13 +689,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{spring_boot}}/blog/21",
+							"raw": "{{spring_boot}}/blog/1",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"blog",
-								"21"
+								"1"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -635,13 +742,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{spring_boot}}/blog/35",
+							"raw": "{{spring_boot}}/blog/1",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"blog",
-								"35"
+								"1"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -683,13 +790,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{spring_boot}}/cart/190/1",
+							"raw": "{{spring_boot}}/cart/3/1",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"cart",
-								"190",
+								"3",
 								"1"
 							]
 						},
@@ -990,7 +1097,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\": \"nguyen van test1231\",\r\n    \"fullAddress\": \"Hà nội1\",\r\n    \"phoneNumber\": \"01234567891\",\r\n    \"email\":\"test1@gmail.com\",\r\n    \"date\": \"2024-04-22 12:43:31\",\r\n    \"paymentMethods\": \"Thanh toán khi giao hàng\",\r\n    \"statusPayment\": \"Chưa thanh toán\",\r\n    \"status\": 1,\r\n    \"amount\": 20000,\r\n    \"note\": \"Hàng dễ vỡ xin nhẹ tay\"\r\n}",
+							"raw": "{\r\n    \"orderFullName\": \"nguyen van test1231\",\r\n    \"orderAddress\": \"Hà nội1\",\r\n    \"orderPhoneNumber\": \"01234567891\",\r\n    \"orderEmail\":\"test1@gmail.com\",\r\n    \"orderDate\": \"2024-04-22 12:43:31\",\r\n    \"orderPaymentMethods\": \"Thanh toán khi giao hàng\",\r\n    \"orderStatusPayment\": \"Chưa thanh toán\",\r\n    \"orderStatus\": 1,\r\n    \"orderAmount\": 20000,\r\n    \"orderNote\": \"Hàng dễ vỡ xin nhẹ tay\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1369,7 +1476,14 @@
 					],
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
 						"header": [],
@@ -1565,6 +1679,53 @@
 					"response": []
 				},
 				{
+					"name": "export-pdf",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{spring_boot}}/user?key=admin",
+							"host": [
+								"{{spring_boot}}"
+							],
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "admin"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
 					"name": "addProduct",
 					"event": [
 						{
@@ -1596,7 +1757,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"name\" : \"pro 1\",\r\n        \"imageUrl\": \"https://bizweb.dktcdn.net/thumb/large/100/399/392/products/ao-khoac-da-lon-nam-cao-cap-hang-hieu-hiddle-1.jpg?v=1704430076163\",\r\n        \"price\": 789,\r\n        \"sale_price\": 0.0,\r\n        \"category_id\": 1,\r\n        \"description\" : \"ahaha\",\r\n        \"status\": 1\r\n}",
+							"raw": "{\r\n        \"productName\" : \"pro 1\",\r\n        \"productImage\": \"https://bizweb.dktcdn.net/thumb/large/100/399/392/products/ao-khoac-da-lon-nam-cao-cap-hang-hieu-hiddle-1.jpg?v=1704430076163\",\r\n        \"productPrice\": 789,\r\n        \"productSalePrice\": 0.0,\r\n        \"productCategoryId\": 1,\r\n        \"productDescription\" : \"ahaha\",\r\n        \"productStatus\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1611,50 +1772,6 @@
 							"path": [
 								"products",
 								""
-							]
-						},
-						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-					},
-					"response": []
-				},
-				{
-					"name": "uploadImage",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Successful POST request\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
-									"});",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{spring_boot}}/products/upload/1",
-							"host": [
-								"{{spring_boot}}"
-							],
-							"path": [
-								"products",
-								"upload",
-								"1"
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -1693,7 +1810,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"name\" : \"pro tesst update\",\r\n        \"imageUrl\": \"https://bizweb.dktcdn.net/thumb/large/100/399/392/products/ao-khoac-da-lon-nam-cao-cap-hang-hieu-hiddle-1.jpg?v=1704430076163\",\r\n        \"price\": 789,\r\n        \"sale_price\": 0.0,\r\n        \"category_id\": 1,\r\n        \"description\" : \"description update\",\r\n        \"status\": 1\r\n}",
+							"raw": "{\r\n        \"productName\" : \"pro test update\",\r\n        \"productImage\": \"https://bizweb.dktcdn.net/thumb/large/100/399/392/products/ao-khoac-da-lon-nam-cao-cap-hang-hieu-hiddle-1.jpg?v=1704430076163\",\r\n        \"productPrice\": 789,\r\n        \"productSalePrice\": 0.0,\r\n        \"productCategoryId\": 1,\r\n        \"productDescription\" : \"ahaha\",\r\n        \"productStatus\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1935,7 +2052,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userName\": \"usertest\",\n    \"userFullName\": \"Nguyễn văn a\",\n    \"userEmail\": \"tuanflute@gmail.com\",\n    \"userPassword\": \"111111\",\n    \"userPhoneNumber\": \"038656453\",\n    \"userAddress\": \"hà nội\",\n    \"gender\": 0\n}",
+							"raw": "{\n\t\"userName\": \"usertest1\",\n    \"userFullName\": \"Nguyễn văn a\",\n    \"userAvatar\": \"image\",\n    \"userEmail\": \"tuanflute@gmail.com\",\n    \"userPassword\": \"111111\",\n    \"userPhoneNumber\": \"038656453\",\n    \"userAddress\": \"hà nội\",\n    \"userGender\": 0,\n    \"userActive\": 0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1987,7 +2104,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userName\": \"usertest\",\n    \"userFullName\": \"Nguyễn văn a\",\n    \"userEmail\": \"tuanflute@gmail.com\",\n    \"userPhoneNumber\": \"038656453\",\n    \"userAddress\": \"hà nội\",\n    \"gender\": 0\n}",
+							"raw": "{\n\t\"userName\": \"test\",\n    \"userFullName\": \"Nguyễn văn a\",\n    \"userAvatar\": \"image update\",\n    \"userEmail\": \"tuanflute@gmail.com\",\n    \"userPhoneNumber\": \"038656453\",\n    \"userAddress\": \"hà nội\",\n    \"userGender\": 0,\n    \"userActive\":0\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1995,13 +2112,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{spring_boot}}/user/usertest",
+							"raw": "{{spring_boot}}/user/test",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
 								"user",
-								"usertest"
+								"test"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -2166,11 +2283,22 @@
 									"});",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -2324,6 +2452,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -2347,120 +2478,6 @@
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
-					},
-					"response": []
-				},
-				{
-					"name": "updateCategory",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Successful PUT request\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{spring_boot}}/info?id=1",
-							"host": [
-								"{{spring_boot}}"
-							],
-							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						},
-						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
-					},
-					"response": []
-				},
-				{
-					"name": "deleteProduct",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Successful DELETE request\", function () {",
-									"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{spring_boot}}/info?id=1",
-							"host": [
-								"{{spring_boot}}"
-							],
-							"path": [
-								"info"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1"
-								}
-							]
-						},
-						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 					},
 					"response": []
 				},
@@ -2547,7 +2564,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"currentPassword\": 123456,\r\n    \"newPassword\": 111111\r\n}",
+							"raw": "{\r\n    \"currentPassword\": 111111,\r\n    \"newPassword\": 12345678\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2599,7 +2616,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userName\": \"usertest\",\n    \"userFullName\": \"Nguyễn văn a\",\n    \"userEmail\": \"tuanflute@gmail.com\",\n    \"userPassword\": \"111111\",\n    \"userPhoneNumber\": \"038656453\",\n    \"userAddress\": \"hà nội\",\n    \"gender\": 0\n}",
+							"raw": "{\n    \"sendEmail\": \"tuanflute27052004@gmail.com\",\n    \"info\": \"hghghg\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2607,12 +2624,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{spring_boot}}/registerNewUser",
+							"raw": "{{spring_boot}}/send/email",
 							"host": [
 								"{{spring_boot}}"
 							],
 							"path": [
-								"registerNewUser"
+								"send",
+								"email"
 							]
 						},
 						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -2636,7 +2654,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n}{\r\n    \"newpassword\": \"111111\",\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcxNTA3NDk5NywiZXhwIjoxNzE1MDkyOTk3fQ.GLu9Ht8mufGLua9IQo0dTSOg9bCe1YLpK_kEzC3eYImXvtHqFOXR_iLViMPT94OpzF1zrCRj-9acrynp-dHg0w\"\r\n}",
+							"raw": "{\r\n    \"newpassword\": \"123456\",\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiaWF0IjoxNzE1MTYyNTE1LCJleHAiOjE3MTUxODA1MTV9.xt-4LEc8ZRPUDR8q2rD0M3pCIpEQVMwpV4_lAJQc5SVi7yfx_BmnydcPc8H1JSD3YpzWegI8GXFui7r4N4z33Q\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3097,7 +3115,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{access_token}}",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcxNTg2OTQxMiwiaWF0IjoxNzE1ODUxNDEyfQ.obDpWq0sXKdUSr1Th091oDJSvJkdgG8sNtNpZzZo4rwpSwaH-4KlE63l52lZpuuh7eIvkNK2C6igzR5G0F8P2g",
 									"type": "string"
 								}
 							]
@@ -3105,10 +3123,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{spring_boot}}/payment",
+							"raw": "http://localhost:8080/payment",
+							"protocol": "http",
 							"host": [
-								"{{spring_boot}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"payment"
 							]

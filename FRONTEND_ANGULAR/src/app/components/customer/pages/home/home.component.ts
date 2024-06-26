@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   page: number = 1;
@@ -24,11 +24,10 @@ export class HomeComponent implements OnInit {
     private cartService: CartService,
     private blogService: BlogService,
     private router: Router
-    ){}
-
-
+  ) {}
 
   ngOnInit(): void {
+    // location.reload();
     this.getAllCategory();
     this.getAllProductNew();
     this.getAllProductSale();
@@ -36,26 +35,29 @@ export class HomeComponent implements OnInit {
     this.getAllBlog();
   }
 
-  getAllBlog(){
-    this.blogService.findAll().subscribe(response => {
-      this.blogs = response.data
-    })
+  getAllBlog() {
+    this.blogService.findAll().subscribe((response) => {
+      this.blogs = response.data;
+    });
   }
 
   getAllProductNew() {
-    this.productService.findAll().subscribe((response: any) => {
-      console.log(response.data)
-      this.newProducts = response.data;
-    }, (err:any) => {
-      console.log(err);
-    })
+    this.productService.findAll().subscribe(
+      (response: any) => {
+        console.log(response.data);
+        this.newProducts = response.data;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
-  getDetailProduct(productId:any){
+  getDetailProduct(productId: any) {
     this.router.navigate([`product/${productId}`]);
   }
 
-  getDetailBlog(blogId: any){
+  getDetailBlog(blogId: any) {
     this.router.navigate([`/blogDetail/${blogId}`]);
   }
 
@@ -69,50 +71,50 @@ export class HomeComponent implements OnInit {
   }
 
   getAllProductSale() {
-    this.productService.getProductDiscount().subscribe((response: any) => {
-      console.log(response.data)
-      this.saleProducts = response.data;
-    }, (err:any) => {
-      console.log(err);
-    })
+    this.productService.getProductDiscount().subscribe(
+      (response: any) => {
+        console.log(response.data);
+        this.saleProducts = response.data;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
-  getCarts(){
-    this.cartService.findAll().subscribe(response => {
-      this.carts = response.data
-    })
+  getCarts() {
+    this.cartService.findAll().subscribe((response) => {
+      this.carts = response.data;
+    });
   }
 
   onBuyNow(productId: number) {
     this.carts.map((item: any) => {
-      if(item.product.productId == productId)
-        this.cartId = item.cartId
-    })
+      if (item.product.productId == productId) this.cartId = item.cartId;
+    });
 
     if (this.cartId != 1) {
-      this.cartService.updateQuantity(this.cartId).subscribe((response: any) => {
-        console.log(response);
-        Swal.fire(
-          '',
-          'Add to cart successfully !',
-          'success'
-        );
-        this.router.navigate(['/cart'])
-      }, (error) => {
-        console.log(error);
-      })
+      this.cartService.updateQuantity(this.cartId).subscribe(
+        (response: any) => {
+          console.log(response);
+          Swal.fire('', 'Add to cart successfully !', 'success');
+          this.router.navigate(['/cart']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     } else {
-      this.cartService.save(productId, 1).subscribe((response: any) => {
-        console.log(response);
-        Swal.fire(
-          '',
-          'Add to cart successfully !',
-          'success'
-        );
-        this.router.navigate(['/cart'])
-      }, (error) => {
-        console.log(error);
-      })
+      this.cartService.save(productId, 1).subscribe(
+        (response: any) => {
+          console.log(response);
+          Swal.fire('', 'Add to cart successfully !', 'success');
+          this.router.navigate(['/cart']);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

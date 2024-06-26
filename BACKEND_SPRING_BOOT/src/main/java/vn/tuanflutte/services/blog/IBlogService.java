@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface IBlogService {
     public List<Blog> findAll();
+    public List<Blog> findAllNoSort();
     public List<Blog> findByTitle(String key);
     public Optional<Blog> findById(Integer blogId);
     public Blog save(Blog blog);

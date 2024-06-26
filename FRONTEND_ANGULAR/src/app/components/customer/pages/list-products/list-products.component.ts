@@ -7,10 +7,9 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
-  styleUrls: ['./list-products.component.css']
+  styleUrls: ['./list-products.component.css'],
 })
 export class ListProductsComponent implements OnInit {
-
   page: number = 1;
   products: any[] = [];
   keywords: any;
@@ -24,32 +23,38 @@ export class ListProductsComponent implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getProductByCategory(this.categoryId)
+    this.getProductByCategory(this.categoryId);
   }
 
   getProductByCategory(categoryId: number) {
-    this.categoryService.findById(categoryId).subscribe((response: any) => {
-      console.log(response.data.products);
-      this.products = response.data.products;
-    }, err => {
-      console.log(err);
-    });
+    this.categoryService.findById(categoryId).subscribe(
+      (response: any) => {
+        console.log(response.data.products);
+        this.products = response.data.products;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  getDetailProduct(productId:any){
+  getDetailProduct(productId: any) {
     this.router.navigate([`product/${productId}`]);
   }
 
   getByName(keyword: any) {
-    this.productService.search(keyword).subscribe((response: any) => {
-      console.log(response.data);
-      this.products = response.data;
-    }, (err:any) => {
-      console.log(err);
-    })
+    this.productService.search(keyword).subscribe(
+      (response: any) => {
+        console.log(response.data);
+        this.products = response.data;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 
   handleChange(e: any) {

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  private URL_API = 'http://localhost:8080/cart';
+  private URL_API = `${environment.apiBaseUrl}/cart`;
 
 
   private httpOptions = {
@@ -18,6 +19,11 @@ export class CartService {
 
 
   constructor(private httpClient: HttpClient) { }
+
+  public pay(): Observable<any> {
+    const url = `${environment.apiBaseUrl}/payment`
+    return this.httpClient.get<any>(url, this.httpOptions)
+  }
 
   public findAll(): Observable<any> {
     const url = `${this.URL_API}`

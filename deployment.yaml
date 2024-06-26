@@ -73,7 +73,6 @@ networks:
 # docker-compose -f ./deployment.yaml rm -s -f phpmyadmin8-container
 # docker-compose -f ./deployment.yaml up -d phpmyadmin8-container
 
-
 # tạo image docker backend
 # docker-compose -f ./deployment.yaml rm -s -f shopapp-spring-container
 # docker-compose -f ./deployment.yaml up -d shopapp-spring-container

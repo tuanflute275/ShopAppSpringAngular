@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface IProductService {
     public List<Product> findAll();
+    public List<Product> findAllNoSort();
     public List<Product> findByName(String key);
     public Optional<Product> findById(Integer productId);
     public Product save(Product product);

@@ -2,9 +2,11 @@ FROM node:latest as build
 
 WORKDIR /app
 
-COPY FRONTEND_ANGULAR /app/frontend_angular
+COPY frontend_angular /app/frontend_angular
 
 RUN npm install -g @angular/cli
+
+WORKDIR /app/frontend_angular
 
 RUN npm install
 
@@ -12,3 +14,5 @@ EXPOSE 4200
 CMD ["ng", "serve", "--host", "0.0.0.0"]
 
 # docker build -t shopapp-angular:1.0.0 -f ./DockerfileAngular .
+# docker tag shopapp-angular:1.0.2 tuanflute/shopapp-angular:1.0.2
+# docker push tuanflute/shopapp-angular:1.0.2

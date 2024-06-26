@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   dataFormPost: any = FormGroup;
@@ -20,16 +20,14 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService,
-  ) { }
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-   
     this.dataFormPost = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-    })
-
+    });
   }
 
   handleSubmit() {
@@ -43,23 +41,23 @@ export class LoginComponent implements OnInit {
         this.authService.setRoles(response.data.user.role);
         this.authService.setToken(response.data.jwtToken);
         this.authService.setAccount(response.data.user);
-        console.log(response)
-        console.log(response.status)
-        if(response.data.jwtToken != ''){
+        console.log(response);
+        console.log(response.status);
+        if (response.data.jwtToken != '') {
           Swal.fire({
-            position: "top-end",
-            icon: "success",
+            position: 'top-end',
+            icon: 'success',
             title: response.data.message,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
           });
-        }else{
+        } else {
           Swal.fire({
-            position: "top-end",
-            icon: "error",
+            position: 'top-end',
+            icon: 'error',
             title: response.data.message,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
           });
         }
         const role = response.data.user.role[0].roleName;
@@ -72,19 +70,18 @@ export class LoginComponent implements OnInit {
             return this.router.navigateByUrl('/');
         }
       },
-      (error:any) => {
+      (error: any) => {
         Swal.fire({
-          position: "top-end",
-          icon: "error",
+          position: 'top-end',
+          icon: 'error',
           title: error.error.message,
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
         this.router.navigate(['/login']);
-       console.log(error)
+        console.log(error);
       }
     );
     console.log(data);
   }
-
 }

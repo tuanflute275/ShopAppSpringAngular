@@ -35,6 +35,12 @@ public class UserService implements IUserService {
     @Autowired
     private JwtService jwtService;
 
+    private List<User> dataPDF;
+
+    public UserService(List<User> listData) {
+        this.dataPDF = listData;
+    }
+
     public void initRoleAndUser() {
 
         Role adminRole = new Role();
@@ -212,4 +218,5 @@ public class UserService implements IUserService {
         user.setUserCount(0);
         userRepo.save(user);
     }
+
 }

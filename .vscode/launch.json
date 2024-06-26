@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-BackendSpringBootApplication<backend_spring_boot>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "vn.tuanflutte.BackendSpringBootApplication",
+      "projectName": "backend_spring_boot",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

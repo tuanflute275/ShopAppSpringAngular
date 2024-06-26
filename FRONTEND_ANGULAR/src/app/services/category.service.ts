@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private URL_API = 'http://localhost:8080/categories';
+  private URL_API = `${environment.apiBaseUrl}/categories`;
 
 
   private httpOptions = {
@@ -15,6 +16,11 @@ export class CategoryService {
       // Authorization: 'my-auth-token'
     }),
   };
+
+  public exportPDF(): Observable<any> {
+    const url = `${this.URL_API}/download`
+    return this.httpClient.get<any>(url, this.httpOptions)
+  }
 
 
   constructor(private httpClient: HttpClient) { }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -95,4 +96,7 @@ export class ListproductComponent implements OnInit {
     });
   }
 
+  handlePDF() {
+    window.location.href = `${environment.apiBaseUrl}/products/download`
+  }
 }

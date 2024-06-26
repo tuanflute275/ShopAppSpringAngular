@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth-service.service';
 import { jwtDecode } from "jwt-decode";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { jwtDecode } from "jwt-decode";
 export class UserService {
   token: any;
   tokenPayload: any;
-  private URL_API = 'http://localhost:8080';
+  private URL_API = `${environment.apiBaseUrl}`;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -32,7 +33,6 @@ export class UserService {
     const url = `${this.URL_API}/change/password`;
     return this.httpClient.put<any>(url, data, this.httpOptions)
   }
-
   public signup(data: any): Observable<any> {
     const url = `${this.URL_API}/registerNewUser`;
     return this.httpClient.post<any>(url, data, this.httpOptions);

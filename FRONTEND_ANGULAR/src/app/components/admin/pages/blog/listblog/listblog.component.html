@@ -17,11 +17,16 @@
           </div>
 
           <div class="iq-card-body">
-            <div class="col-lg-4 p-0">
-              <form [formGroup]="myGroup">
-                <input type="text" class="form-control" placeholder="Search in Blog.." formControlName="keywords"
-                  (input)="handleChange($event)" />
-              </form>
+            <div class="d-flex justify-content-between">
+              <div class="col-lg-4 p-0">
+                <form [formGroup]="myGroup">
+                  <input type="text" class="form-control" placeholder="Search in Blog.." formControlName="keywords"
+                    (input)="handleChange($event)" />
+                </form>
+              </div>
+              <div class="iq-card-header-toolbar d-flex align-items-center">
+                <a href="javascript:void(0)" (click)="handlePDF()" class="btn btn-primary">Export PDF</a>
+              </div>
             </div>
             <div class="table-responsive">
               <table class="data-tables table table-striped table-bordered" style="width:100%">

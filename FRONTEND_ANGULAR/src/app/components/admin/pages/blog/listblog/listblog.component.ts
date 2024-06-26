@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BlogService } from 'src/app/services/blog.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -85,4 +86,7 @@ export class ListblogComponent implements OnInit{
       });
     }
 
+    handlePDF() {
+      window.location.href = `${environment.apiBaseUrl}/blog/download`
+    }
 }
