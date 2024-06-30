@@ -24,7 +24,6 @@ public class CartController {
     private CartRepository cartRepository;
 
     @GetMapping("")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> getAllCart(){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
@@ -38,7 +37,6 @@ public class CartController {
     }
 
     @GetMapping("/{cartId}")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> getById(@PathVariable int cartId){
         Optional<Cart> foundCart = cartService.findById(cartId);
         if(foundCart.isPresent()){
@@ -53,7 +51,6 @@ public class CartController {
     }
 
     @GetMapping("/{productId}/{quantity}")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> postCart(@PathVariable(name = "productId") Integer productId, @PathVariable(name = "quantity") Integer quantity){
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("success", "Insert data successfully", cartService.addToCart(productId, quantity))
@@ -61,7 +58,6 @@ public class CartController {
     }
 
     @PutMapping("/{cartId}/{productId}/{quantity}/{totalAmount}")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> putCart(
             @PathVariable(name = "cartId") Integer cartId,
             @PathVariable(name = "productId") Integer productId,
@@ -73,7 +69,6 @@ public class CartController {
     }
 
     @PutMapping("/{cartId}")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> updateQuantity(@PathVariable(name = "cartId") Integer cartId){
         cartService.updateQuantity(cartId);
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -82,7 +77,6 @@ public class CartController {
     }
 
     @DeleteMapping("/{cartId}")
-    @PreAuthorize("hasRole('User')")
     ResponseEntity<ResponseObject> deleteCart(@PathVariable int cartId){
         boolean exits = cartService.existsById(cartId);
         if(exits){

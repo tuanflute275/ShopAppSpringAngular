@@ -1,0 +1,96 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Chỉnh sửa coupon Condition</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <form [formGroup]="couponConditionFormUpdate" (ngSubmit)="handleSubmit()">
+              <!-- <div class="form-group">
+                <label for="coupon_id">Coupon</label>
+                <select class="form-control" formControlName="coupon_id" id="coupon_id">
+                  <option value="">--Danh Mục Coupon--</option>
+                  <option *ngFor="let item of data" value="{{ item.id }}">{{ item.code }}</option>
+                </select>
+                <div class="box-message"
+                  *ngIf="couponConditionFormUpdate.controls.coupon_id.invalid && (couponConditionFormUpdate.controls.coupon_id.touched || couponConditionFormUpdate.controls.coupon_id.dirty)">
+                  <div *ngIf="couponConditionFormUpdate.controls.image.errors">
+
+                    <div *ngIf="couponConditionFormUpdate.controls.coupon_id.errors['required']" style="color: red;">
+                      coupon_id không được bỏ trống!!
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="form-group">
+                <label for="attribute">Thuộc tính</label>
+                <input type="text" formControlName="attribute" class="form-control" id="attribute"
+                  placeholder="Enter your attribute">
+                <div class="box-message"
+                  *ngIf="couponConditionFormUpdate.controls.attribute.invalid && (couponConditionFormUpdate.controls.attribute.touched || couponConditionFormUpdate.controls.attribute.dirty)">
+                  <div *ngIf="couponConditionFormUpdate.controls.attribute.errors">
+                    <div *ngIf="couponConditionFormUpdate.controls.attribute.errors['required']" style="color: red;">attribute is
+                      require!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="operator">Điều kiện</label>
+                <input type="text" formControlName="operator" class="form-control" id="operator"
+                  placeholder="Enter your operator">
+                <div class="box-message"
+                  *ngIf="couponConditionFormUpdate.controls.operator.invalid && (couponConditionFormUpdate.controls.operator.touched || couponConditionFormUpdate.controls.operator.dirty)">
+                  <div *ngIf="couponConditionFormUpdate.controls.operator.errors">
+                    <div *ngIf="couponConditionFormUpdate.controls.operator.errors['required']" style="color: red;">operator is
+                      require!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="value">Giá trị</label>
+                <input type="text" formControlName="value" class="form-control" id="value"
+                  placeholder="Enter your value">
+                <div class="box-message"
+                  *ngIf="couponConditionFormUpdate.controls.value.invalid && (couponConditionFormUpdate.controls.value.touched || couponConditionFormUpdate.controls.value.dirty)">
+                  <div *ngIf="couponConditionFormUpdate.controls.value.errors">
+                    <div *ngIf="couponConditionFormUpdate.controls.value.errors['required']" style="color: red;">value is
+                      require!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="discount_amount">Giảm số %</label>
+                <input type="text" formControlName="discount_amount" class="form-control" id="discount_amount"
+                  placeholder="Enter your discount_amount">
+                <div class="box-message"
+                  *ngIf="couponConditionFormUpdate.controls.discount_amount.invalid && (couponConditionFormUpdate.controls.discount_amount.touched || couponConditionFormUpdate.controls.discount_amount.dirty)">
+                  <div *ngIf="couponConditionFormUpdate.controls.discount_amount.errors">
+                    <div *ngIf="couponConditionFormUpdate.controls.discount_amount.errors['required']" style="color: red;">discount_amount is
+                      require!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="submit" *ngIf="couponConditionFormUpdate.valid" class="btn btn-primary">Submit</button>
+              <button type="submit" *ngIf="!couponConditionFormUpdate.valid" disabled class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

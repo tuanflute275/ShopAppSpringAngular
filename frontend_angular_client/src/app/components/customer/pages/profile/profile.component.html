@@ -1,0 +1,173 @@
+<app-header></app-header>
+
+<!-- Page Content  -->
+<div id="content-page" class="content-page m-0 mx-5">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="iq-card">
+          <div class="iq-card-body p-0">
+            <div class="iq-edit-list">
+              <ul class="iq-edit-profile d-flex nav nav-pills">
+                <li class="col-md-3 p-0">
+                  <a class="nav-link active" data-toggle="pill" href="#personal-information">
+                    Thông tin cá nhân
+                  </a>
+                </li>
+                <li class="col-md-3 p-0">
+                  <a class="nav-link" data-toggle="pill" href="#chang-pwd">
+                    Đổi mật khẩu
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="iq-edit-list-data">
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="personal-information" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Thông tin cá nhân</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form [formGroup]="dataFormPost" (ngSubmit)="handleSubmit()">
+                    <div class="form-group row align-items-center">
+                      <div class="col-md-12">
+                        <div class="profile-img-edit">
+                              <img style="height: 200px;width: 200px; cursor: pointer;"
+                              class="thumbnail rounded-circle" data-toggle="tooltip"
+                              title="Click to change the image" data-placement="bottom"
+                              src="{{imgUrl ? imgUrl : imageDefault}}" alt="Avatar">
+                              <input name="file" type="file" onchange="changeImg(this)" multiple
+                              (change)="onFileChange($event)"
+                              class="image form-control-file mt-3" >
+                        </div>
+                      </div>
+                    </div>
+                    <!-- image  -->
+                    <div class=" row align-items-center">
+                      <div class="form-group col-sm-6">
+                        <label for="fname">Tên tài khoản:</label>
+                        <input type="text" class="form-control" formControlName="userName" readonly>
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label for="lname">Họ và tên:</label>
+                        <input type="text" class="form-control" formControlName="userFullName">
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label for="uname">Email:</label>
+                        <input type="text" class="form-control" formControlName="userEmail">
+                      </div>
+                      <div class="form-group col-sm-6">
+                        <label for="userPhoneNumber">Số điện thoại:</label>
+                        <input type="text" class="form-control" formControlName="userPhoneNumber">
+                      </div>
+
+                      <div class="form-group col-sm-6">
+                        <label for="">Giới tính:</label>
+                        <br />
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" value="0" [checked]="gender == 0"
+                              (change)="onItemChange($event)" />
+                            Nam
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <label class="form-check-label">
+                            <input class="form-check-input" type="radio" value="1" [checked]="gender == 1"
+                              (change)="onItemChange($event)" />
+                            Nữ
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="form-group col-sm-12">
+                        <label>Địa chỉ:</label>
+                        <textarea class="form-control" formControlName="userAddress" rows="5"
+                          style="line-height: 22px;"></textarea>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Gửi</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="chang-pwd" role="tabpanel">
+              <div class="iq-card">
+                <div class="iq-card-header d-flex justify-content-between">
+                  <div class="iq-header-title">
+                    <h4 class="card-title">Đổi mật khẩu</h4>
+                  </div>
+                </div>
+                <div class="iq-card-body">
+                  <form [formGroup]="passwordFormPost" (ngSubmit)="handleChangePassword()">
+                    <div class="form-group">
+                      <label for="cpass">Mật khẩu hiện tại:</label>
+                      <a href="javascripe:void();" class="float-right">Quên mật khẩu</a>
+                      <input type="Password" formControlName="currentPassword" class="form-control" id="cpass">
+                      <div class="box-message"
+                        *ngIf="passwordFormPost.controls.currentPassword.invalid && (passwordFormPost.controls.currentPassword.touched || passwordFormPost.controls.currentPassword.dirty)">
+                        <div *ngIf="passwordFormPost.controls.currentPassword.errors">
+                          <div *ngIf="passwordFormPost.controls.currentPassword.errors['required']" style="color: red;">
+                            Mật khẩu không được bỏ trống !
+                          </div>
+                          <div *ngIf="passwordFormPost.controls.currentPassword.errors['minlength'] "
+                            style="color: red;">
+                            Mật khẩu tối thiểu 6 kí tự !
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="npass">Mật khẩu mới:</label>
+                      <input type="Password" formControlName="newPassword" class="form-control" id="npass">
+                      <div class="box-message"
+                        *ngIf="passwordFormPost.controls.newPassword.invalid && (passwordFormPost.controls.newPassword.touched || passwordFormPost.controls.newPassword.dirty)">
+                        <div *ngIf="passwordFormPost.controls.newPassword.errors">
+                          <div *ngIf="passwordFormPost.controls.newPassword.errors['required']" style="color: red;">
+                            Mật khẩu không được bỏ trống !
+                          </div>
+                          <div *ngIf="passwordFormPost.controls.newPassword.errors['minlength'] " style="color: red;">
+                            Mật khẩu tối thiểu 6 kí tự !
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="vpass">Xác nhận lại mật khẩu:</label>
+                      <input type="Password" formControlName="passwordConfirm" class="form-control" id="vpass">
+                      <div class="box-message"
+                        *ngIf="passwordFormPost.controls.passwordConfirm.invalid && (passwordFormPost.controls.passwordConfirm.touched || passwordFormPost.controls.passwordConfirm.dirty)">
+                        <div *ngIf="passwordFormPost.controls.passwordConfirm.errors">
+                          <div *ngIf="passwordFormPost.controls.passwordConfirm.errors['required']" style="color: red;">
+                            Mật khẩu không được bỏ trống !
+                          </div>
+                          <div *ngIf="passwordFormPost.controls.passwordConfirm.errors['minlength'] "
+                            style="color: red;">
+                            Mật khẩu tối thiểu 6 kí tự !
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2" *ngIf="passwordFormPost.valid">Gửi</button>
+                    <button type="submit" class="btn btn-primary mr-2" *ngIf="!passwordFormPost.valid"
+                      disabled>Gửi</button>
+                    <button type="reset" class="btn iq-bg-danger">Hủy bỏ</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Content END  -->
+<app-footer></app-footer>

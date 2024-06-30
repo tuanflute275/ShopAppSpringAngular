@@ -1,0 +1,88 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Danh sách đơn hàng</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <div class="col-lg-4 p-0">
+              <form [formGroup]="myGroup">
+                <input type="text" class="form-control" placeholder="Search in Order by phone number.."
+                  formControlName="keywords" (input)="handleChange($event)" />
+              </form>
+            </div>
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Khách hàng</th>
+                    <th>Số điện thoại</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Trạng thái thanh toán</th>
+                    <th>Thành tiền</th>
+                    <th>Ghi chú</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th class="text-center">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate:{itemsPerPage: 10, currentPage:page}">
+                    <td>{{ item.orderId }}</td>
+                    <td>{{ item.orderFullName ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.orderPhoneNumber ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.orderAddress ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.orderDate | date : "fullDate" }}</td>
+                    <td>{{ item.orderPaymentMethods  ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.orderStatusPayment ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.orderAmount | currency: 'VND' : 'symbol' : '1.0-2' }}</td>
+                    <td>{{ item.orderNote ?? "Không có dữ liệu"}}</td>
+
+                    <td *ngIf="item.orderStatus == 1">
+                      <div class="badge badge-pill badge-success">Chờ Xác Nhận</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 2">
+                      <div class="badge badge-pill badge-success">Xác Nhận Đơn Hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 3">
+                      <div class="badge badge-pill badge-success">Chuẩn bị đơn hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 4">
+                      <div class="badge badge-pill badge-success">Đang giao hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 5">
+                      <div class="badge badge-pill badge-success">Đã giao hàng</div>
+                    </td>
+                    <td *ngIf="item.orderStatus == 6">
+                      <div class="badge badge-pill badge-danger">Đã hủy</div>
+                    </td>
+                    <td>
+                      <div class="flex align-items-center list-user-action">
+                        <a class="bg-info" title="Detail" href="javascript:void();"
+                          (click)="onDetailOrder(item.orderId)"><i class="ri-weibo-fill"></i></a>
+                        <a class="bg-primary" title="Edit" href="javascript:void();"
+                          (click)="onEditOrder(item.orderId)"><i class="ri-pencil-line"></i></a>
+                        <a class="bg-danger" title="delete" href="javascript:void();"
+                          (click)="onDeleteOrder(item.orderId)"><i class="ri-delete-bin-line"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

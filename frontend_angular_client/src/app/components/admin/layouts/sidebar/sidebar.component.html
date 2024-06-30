@@ -1,0 +1,31 @@
+<div class="iq-sidebar">
+  <div class="iq-sidebar-logo d-flex justify-content-between">
+    <a [routerLink]="['/admin']" class="header-logo">
+      <img src="images/logo.png" class="img-fluid rounded-normal" alt="">
+      <div class="logo-title">
+        <span class="text-primary text-uppercase">Admin Panel</span>
+      </div>
+    </a>
+    <div class="iq-menu-bt-sidebar">
+      <div class="iq-menu-bt align-self-center">
+        <div class="wrapper-menu">
+          <div class="main-circle"><i class="las la-bars"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="sidebar-scrollbar">
+    <nav class="iq-sidebar-menu">
+      <ul id="iq-sidebar-toggle" class="iq-menu">
+        <li><a [routerLink]="['/admin']"><i class="las la-home iq-arrow-left"></i>Bảng Điều Khiển</a></li>
+        <li><a [routerLink]="['/admin/account']"><i class="ri-record-circle-line"></i>Quản lý Tài Khoản</a></li>
+        <li><a [routerLink]="['/admin/category']"><i class="ri-record-circle-line"></i>Quản lý Danh Mục</a></li>
+        <li><a [routerLink]="['/admin/product']"><i class="ri-record-circle-line"></i>Quản lý Sản Phẩm</a></li>
+        <li><a [routerLink]="['/admin/blog']"><i class="ri-record-circle-line"></i>Quản lý Tin Tức</a></li>
+        <li><a [routerLink]="['/admin/order']"><i class="ri-record-circle-line"></i>Quản lý Đơn Hàng</a></li>
+        <li><a [routerLink]="['/admin/coupon']"><i class="ri-record-circle-line"></i>Quản lý Coupon</a></li>
+        <li><a [routerLink]="['/admin/couponCondition']"><i class="ri-record-circle-line"></i>Quản lý condition Coupon</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<app-header></app-header>
+<div id="content-page" class="content-page m-0 mx-5">
+  <div class="container-fluid checkout-content">
+    <div class="row">
+      <div id="cart" class="card-block show p-0 col-12">
+        <div class="row align-item-center">
+          <div class="col-lg-8">
+            <div class="iq-card">
+              <div class="iq-card-header d-flex justify-content-between iq-border-bottom mb-0">
+                <div class="iq-header-title">
+                  <h4 class="card-title">Giỏ hàng</h4>
+                </div>
+              </div>
+              <div class="iq-card-body">
+                <ul class="list-inline p-0 m-0">
+                  <li class="checkout-product" *ngFor="let item of data">
+                    <div class="row align-items-center">
+                      <div class="col-sm-2">
+                        <span class="checkout-product-img">
+                          <a href="javascript:void();" (click)="getDetailProduct(item.product.productId)"><img
+                              class="img-fluid rounded" src="{{ item.product.productImage }}"
+                              alt="{{ item.product.productName }}"></a>
+                        </span>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="checkout-product-details">
+                          <h5>{{ item.product.productName }}</h5>
+                          <p class="text-success">{{ item.product.productStatus == 1 ? "Còn hàng" : "Hết hàng" }}</p>
+                          <div class="price">
+                            <h5>{{ (item.product.productSalePrice > 0 ? item.product.productSalePrice : item.product.productPrice) |
+                              currency: 'VND' : 'symbol' : '1.0-2'}}</h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="row">
+                          <div class="col-sm-10">
+                            <div class="row align-items-center mt-2">
+                              <div class="col-sm-7 col-md-6">
+                                <button type="button" class="fa fa-minus qty-btn" id="btn-minus" (click)="handleMinus(item, item.quantity, ((item.product.productSalePrice > 0 ? item.product.productSalePrice : item.product.productPrice) *
+                                  item.quantity))"></button>
+                                <input (change)="updateQuantity(item, $event, ((item.product.productSalePrice > 0 ? item.product.productSalePrice : item.product.productPrice) *
+                                item.quantity))" id="quantity" type="number" min="1" max="99" name="quantity"
+                                  value="{{item.quantity ? item.quantity : 1}}" style="padding-left: 18px;
+                                width: 60px;">
+                                <button type="button" class="fa fa-plus qty-btn" id="btn-plus" (click)="handlePlus(item, item.quantity, ((item.product.productSalePrice > 0 ? item.product.productSalePrice : item.product.productPrice) *
+                                  item.quantity))"></button>
+                              </div>
+                              <div class="col-sm-5 col-md-6">
+                                <span class="product-price">
+                                  {{ ((item.product.productSalePrice > 0 ? item.product.productSalePrice : item.product.productPrice) *
+                                  item.quantity) |
+                                  currency: 'VND' : 'symbol' : '1.0-2' }}
+                                </span>
+
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-2">
+                            <a href="javascript:void();" (click)="removeCart(item.cartId)"
+                              class="text-dark font-size-20">
+                              <i class="ri-delete-bin-7-fill"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="checkout-product" *ngIf="data.length == 0">
+                    <div class="alert alert-success" role="alert">
+                      <strong>Không có sản phẩm ! Tiếp tục mua sắm </strong> <a [routerLink]="['/product']"
+                        class="alert-link text-warning ml-1"> tại đây</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="iq-card">
+
+              <div class="iq-card-body">
+                <form class="my-3" [formGroup]="myGroup" (ngSubmit)="handleCoupon()">
+                  <div class="d-flex justify-content-end">
+                    <div class="cvv-input ml-2 mr-2" style="width: 100%;">
+                      <input type="text" class="form-control" formControlName="coupon" placeholder="Mã giảm giá">
+                    </div>
+                    <button type="submit" style="width: 121px;" class="btn btn-primary">Áp dụng</button>
+                  </div>
+                </form>
+
+
+                <p><b>Chi tiết</b></p>
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Tổng</span>
+                  <span>{{ totalCart | currency: 'VND' : 'symbol' : '1.0-2' }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Phần trăm</span>
+                  <span>{{ percentDiscount }}%</span>
+                </div>
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Giảm giá</span>
+                  <span class="text-success">{{ discount | currency: 'VND' : 'symbol' : '1.0-2' }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Phí vận chuyển</span>
+                  <span class="text-success">Miễn phí</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                  <span class="text-dark"><strong>Tổng</strong></span>
+                  <span class="text-dark"><strong>{{ totalAmount | currency: 'VND' : 'symbol' : '1.0-2'
+                      }}</strong></span>
+                </div>
+                <a id="place-order" (click)="onCheckout()" href="javascript:void();"
+                  class="btn btn-primary d-block mt-3 next">Đặt hàng</a>
+                <a id="place-order" (click)="onPay()" href="javascript:void();"
+                  class="btn btn-primary d-block mt-3 next">Thanh toán VNPAY</a>
+              </div>
+            </div>
+            <div class="iq-card ">
+              <div class="card-body iq-card-body p-0 iq-checkout-policy">
+                <ul class="p-0 m-0">
+                  <li class="d-flex align-items-center">
+                    <div class="iq-checkout-icon">
+                      <i class="ri-checkbox-line"></i>
+                    </div>
+                    <h6>Chính sách bảo mật (Thanh toán an toàn và bảo mật.)</h6>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <div class="iq-checkout-icon">
+                      <i class="ri-truck-line"></i>
+                    </div>
+                    <h6>Chính sách giao hàng (Giao hàng tận nhà.)</h6>
+                  </li>
+                  <li class="d-flex align-items-center">
+                    <div class="iq-checkout-icon">
+                      <i class="ri-arrow-go-back-line"></i>
+                    </div>
+                    <h6>Chính sách hoàn trả</h6>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

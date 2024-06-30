@@ -1,0 +1,79 @@
+<app-header></app-header>
+<div id="content-page" class="content-page m-0 mx-5">
+  <div class="container-fluid checkout-content">
+    <div class="row">
+      <div id="address" class="p-0 col-12">
+        <div class="row align-item-center">
+          <div class="col-lg-8">
+            <div class="iq-card">
+              <div class="iq-card-header d-flex justify-content-between">
+                <div class="iq-header-title">
+                  <h4 class="card-title">Thêm địa chỉ mới</h4>
+                </div>
+              </div>
+              <div class="iq-card-body">
+                <form [formGroup]="dataFormPost" (ngSubmit)="handleSubmit()">
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Họ và tên: <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="Điền họ và tên tại đây..." formControlName="fullName"
+                          class="form-control">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Số điện thoại: <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="Điền số điện thoại tại đây..." formControlName="phoneNumber"
+                          class="form-control" name="mno">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Email: <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="Điền email tại đây..." formControlName="email"
+                          class="form-control" name="houseno">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Địa chỉ: <span style="color: red;">*</span></label>
+                        <input type="text" placeholder="Điền địa chỉ tại đây..." formControlName="fullAddress"
+                          class="form-control" name="houseno">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="note">Ghi chú:</label>
+                    <textarea class="form-control" formControlName="note" id="note" placeholder="Ghi nội dung tại đây..." cols="20"
+                      rows="5"></textarea>
+                  </div>
+                  <button id="savenddeliver" type="submit" class="btn btn-primary">Lưu và giao tại đây</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="iq-card">
+              <div class="iq-card-body">
+                <h4 class="mb-2">{{ u_data.userFullName }}</h4>
+                <div class="shipping-address">
+                  <p><b>Giới tính:</b> {{ u_data.gender == 0 ? "Nam" : "Nữ" }}</p>
+                  <p><b>Email:</b> {{ u_data.userEmail }}</p>
+                  <p><b>Số điện thoại:</b> {{ u_data.userPhoneNumber }}</p>
+                  <p><b>Địa chỉ:</b> {{ u_data.userAddress }}</p>
+                </div>
+                <hr>
+                <a (click)="onOrder()" id="deliver-address" href="javascript:void();"
+                  class="btn btn-primary d-block mt-1 next">Thông tin</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<!-- Page Content  -->
+<main>
+  <div class="text-center box-title">
+    <nav class="breadcrumb text-center d-flex justify-content-center">
+      <a class="breadcrumb-item default" routerLink="/">Home</a>
+      <span class="breadcrumb-item active">Our Blog</span>
+    </nav>
+    <h3 class="title">OUR BLOG</h3>
+    <div class="container">
+    </div>
+  </div>
+  <div class="container">
+    <div class="iq-card">
+      <div class="iq-card-body">
+        <div class="row">
+          <div class="card-category row justify-content-center align-items-center container m-auto">
+            <div class="col-md-4 my-4" *ngFor="let item of data | paginate:{itemsPerPage: 9, currentPage:page} ">
+              <div class="sp-card-2">
+                <div class="overlap">
+                  <a (click)="getDetailBlog(item.blogId)" style="cursor: pointer;" title="View Details">View
+                    Details</a>
+                </div>
+                <div class="card-image">
+                  <img src="{{ item.blogImage ? item.blogImage : imageDefault}}" alt="{{ item.blogTitle }}" />
+                </div>
+                <div class="card-content">
+                  <span class="card-title">{{ item.blogTitle }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+            nextLabel=""></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Page Content END  -->
+<app-footer></app-footer>

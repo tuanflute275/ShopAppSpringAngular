@@ -1,0 +1,69 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Danh sách tin tức</h4>
+            </div>
+
+            <div class="iq-card-header-toolbar d-flex align-items-center">
+              <a [routerLink]="['/admin/blog/add']" class="btn btn-primary">Thêm mới</a>
+            </div>
+          </div>
+
+          <div class="iq-card-body">
+            <div class="d-flex justify-content-between">
+              <div class="col-lg-4 p-0">
+                <form [formGroup]="myGroup">
+                  <input type="text" class="form-control" placeholder="Search in Blog.." formControlName="keywords"
+                    (input)="handleChange($event)" />
+                </form>
+              </div>
+              <div class="iq-card-header-toolbar d-flex align-items-center">
+                <a href="javascript:void(0)" (click)="handlePDF()" class="btn btn-primary">Export PDF</a>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered" style="width:100%">
+                <thead>
+                  <tr>
+                    <th width="5%">STT</th>
+                    <th width="1%">Hình ảnh</th>
+                    <th width="20%">Tên tin tức</th>
+                    <th width="15%">Hoạt động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate:{itemsPerPage: 10, currentPage:page} ">
+                    <td>{{item.blogId}}</td>
+                    <td>
+                      <img style="width: 100px;" src="{{ item.blogImage ? item.blogImage : imageDefault }}" alt="{{ item.blogTitle }}" class="card-img" />
+                    </td>
+                    <td>{{item.blogTitle ?? "Không có dữ liệu"}}</td>
+                    <td>
+                      <div class="flex align-items-center list-user-action">
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Sửa" href="javascript:void();" (click)="onEditBlog(item.blogId)"><i
+                            class="ri-pencil-line"></i></a>
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Delete" href="javascript:void();" (click)="onDeleteBlog(item.blogId)"><i
+                            class="ri-delete-bin-line"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

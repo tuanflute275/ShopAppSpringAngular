@@ -1,0 +1,135 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth-service.service';
+import { CartService } from 'src/app/services/cart.service';
+import { ProductService } from 'src/app/services/product.service';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-details',
+  templateUrl: './details.component.html',
+  styleUrls: ['./details.component.css']
+})
+export class DetailsComponent implements OnInit {
+  u_data: any;
+  page: number = 1;
+  product: any;
+  category_id: any;
+  productRelated: any[] = [];
+  id: number = this.route.snapshot.params['id'];
+  userData: any;
+  quantity: number = 1;
+  carts: any[] = [];
+  checkProductInCart: boolean = false;
+  cartId: number = 1;
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService,
+  ) { }
+
+  ngOnInit(): void {
+      this.getCarts()
+      this.productService.findById(this.id).subscribe((response: any) => {
+        this.product = response.data[0];
+        this.productService.getProductRelated(response.data[0].productId, response.data[0].productCategoryId).subscribe(response => {
+          this.productRelated = response.data;
+          console.log(response.data)
+        })
+      }, (err:any) => {
+        console.log(err);
+      });
+      
+      this.u_data = this.getUData();
+  }
+
+  getUData(): any {
+    const data = this.authService.getAccount();
+    return data;
+  }
+
+  getCarts(){
+    this.cartService.findAll().subscribe(response => {
+      this.carts = response.data
+    })
+  }
+
+  getDetailProduct(productId:any){
+    window.location.href = `product/${productId}`
+  }
+
+  getLocalStorage(): any {
+    this.userData = JSON.parse(localStorage.getItem('u_data') as any) || {};
+  }
+
+  onAddToCart(productId: number) {
+    this.carts.map((item: any) => {
+      if(item.product.productId == productId)
+        this.cartId = item.cartId
+        this.checkProductInCart = true
+    })
+
+    if (this.cartId != 1) {
+      this.cartService.updateQuantity(this.cartId).subscribe((response: any) => {
+        console.log(response);
+        Swal.fire(
+          '',
+          'Add to cart successfully !',
+          'success'
+        );
+      }, (error) => {
+        console.log(error);
+      })
+    } else {
+      this.cartService.save(productId, 1).subscribe((response: any) => {
+        console.log(response);
+        Swal.fire(
+          '',
+          'Add to cart successfully !',
+          'success'
+        );
+      }, (error) => {
+        console.log(error);
+      })
+    }
+
+  }
+
+  onBuyNow(productId: number) {
+    this.carts.map((item: any) => {
+      if(item.product.productId == productId)
+        this.cartId = item.cartId
+        this.checkProductInCart = true
+    })
+
+    if (this.cartId != 1) {
+      this.cartService.updateQuantity(this.cartId).subscribe((response: any) => {
+        console.log(response);
+        Swal.fire(
+          '',
+          'Add to cart successfully !',
+          'success'
+        );
+        this.router.navigate(['/cart'])
+      }, (error) => {
+        console.log(error);
+      })
+    } else {
+      this.cartService.save(productId, 1).subscribe((response: any) => {
+        console.log(response);
+        Swal.fire(
+          '',
+          'Add to cart successfully !',
+          'success'
+        );
+        this.router.navigate(['/cart'])
+      }, (error) => {
+        console.log(error);
+      })
+    }
+
+  }
+}

@@ -1,0 +1,87 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Chi tiết đơn hàng</h4>
+            </div>
+          </div>
+          <div class="iq-card-body">
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>quantity</th>
+                    <th>totalMoney</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data">
+                    <td>{{ item.orderDetailId }}</td>
+                    <td>{{ item.productId }}</td>
+                    <td>{{ item.price | currency: 'VND' : 'symbol' : '1.0-2'}}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.totalMoney | currency: 'VND' : 'symbol' : '1.0-2'}}</td>
+                    <td>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#popup"
+                        (click)="OnDetailProduct(item.productId)">
+                        Chi tiết
+                      </button>
+
+                      <div class="modal fade" id="popup" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <a href="javascript:void(0)" rel="noopener noreferrer">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle" style="text-align: center;
+                                  font-size: 30px;
+                                  color: #157779;"> Thông tin sản phẩm </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="d-flex">
+                                  <div class="col-6">
+                                    <img style="width: 100px;" src="{{product.productImage}}" alt="">
+                                  </div>
+                                  <div class="col-6">
+                                    <p><span class="text-dark">Name:</span><br> {{ product.productName }}</p>
+                                    <p><span class="text-dark">Price:</span><br> {{ (product.productSalePrice > 0 ?
+                                      product.productSalePrice : product.productPrice) | currency: 'VND' :
+                                      'symbol' : '1.0-2' }}</p>
+                                    <p><span class="text-dark">Category:</span><br> {{ product.productCategoryName }}</p>
+                                    <p><span class="text-dark">Description:</span><br> {{ product.productDescription ?
+                                      product.productDescription : "No Decs"}}</p>
+                                  </div>
+                                </div>
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <a class="btn btn-primary" [routerLink]="['/admin/order']" role="button">Quay lại</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

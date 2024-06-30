@@ -1,0 +1,64 @@
+<app-header></app-header>
+
+<!-- Page Content  -->
+<main>
+  <div class="container width-custom">
+    <div class="post-header text-center">
+      <div class="post-title">
+        <h2>{{ blog.blogTitle }}</h2>
+      </div>
+      <div class="blog_meta">
+        <ul class="d-flex justify-content-center">
+          <!-- <li>Adam Levine</li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="blog_details_desc">
+      {{ blog.blogDescription }}
+    </div>
+  </div>
+  <div class="container related_posts">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-sm-12 img-mb-24">
+        <img src="{{ blog.blogImage }}" alt="" />
+      </div>
+    </div>
+    <div class="post_tags_social">
+      <div
+        class="post_tags d-flex justify-content-center align-items-center"
+      ></div>
+      <div
+        class="post__social d-flex justify-content-center align-items-center"
+      >
+        <span>SHARE: </span>
+        <ul class="d-flex">
+          <li>
+            <a href="https://twitter.com/tuanflute275" target="_blank">
+              <i class="fa-brands fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.facebook.com/profile.php?id=100047425502024"
+              target="_blank"
+            >
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.google.com.vn/?hl=vi" target="_blank">
+              <i class="fa-brands fa-google"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/tn791660/" target="_blank">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- Page Content END  -->
+<app-footer></app-footer>

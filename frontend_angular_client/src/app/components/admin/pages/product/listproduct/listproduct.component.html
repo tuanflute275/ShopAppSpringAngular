@@ -1,0 +1,74 @@
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+<div id="content-page" class="content-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="iq-card">
+          <div class="iq-card-header d-flex justify-content-between">
+            <div class="iq-header-title">
+              <h4 class="card-title">Danh sách sản phẩm</h4>
+            </div>
+            <div class="iq-card-header-toolbar d-flex align-items-center">
+              <a routerLink="/admin/product/add" class="btn btn-primary">Thêm mới</a>
+            </div>
+          </div>
+          <div class="iq-card-body">
+           <div class="d-flex justify-content-between">
+            <div class="col-lg-4 p-0">
+              <form [formGroup]="myGroup">
+                <input type="text" class="form-control" placeholder="Search in Product.." formControlName="keywords"
+                  (input)="handleChange($event)" />
+              </form>
+            </div>
+            <div class="iq-card-header-toolbar d-flex align-items-center">
+              <a href="javascript:void(0)" (click)="handlePDF()" class="btn btn-primary">Export PDF</a>
+            </div>
+           </div>
+            <div class="table-responsive">
+              <table class="data-tables table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Sale Price</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of data | paginate:{itemsPerPage: 10, currentPage:page}">
+                    <td>{{ item.productId }}</td>
+                    <td>
+                      <img style="width: 100px;" src="{{ item.productImage ? item.productImage : imageDefault }}" alt="{{ item.productName }}" class="card-img" />
+                    </td>
+                    <td>{{ item.productName ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.productPrice | currency: 'VND' : 'symbol' : '1.0-2'}}</td>
+                    <td>{{ item.productSalePrice | currency: 'VND' : 'symbol' : '1.0-2'}}</td>
+                    <td>{{ item.productCategoryName ?? "Không có dữ liệu"}}</td>
+                    <td>{{ item.productStatus == 1 ? "Show" : "Hide" }}</td>
+                    <td>
+                      <div class="flex align-items-center list-user-action">
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Sửa" href="javascript:void();" (click)="onEditProduct(item.productId)"><i
+                            class="ri-pencil-line"></i></a>
+                        <a class="bg-primary" data-toggle="tooltip" data-placement="top" title=""
+                          data-original-title="Delete" href="javascript:void();"
+                          (click)="onDeleteProduct(item.productId)"><i class="ri-delete-bin-line"></i></a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls class="pagination" (pageChange)="page = $event" previousLabel=""
+                nextLabel=""></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
